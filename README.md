@@ -22,7 +22,7 @@ Most of the data are available in a tabular format of CSV files. It is trendy an
 In this article, the data to predict Used car price is being used as an example. In this dataset, we are trying to analyze the used car’s price and how EDA focuses on identifying the factors influencing the car price. We have stored the data in the DataFrame data.
 
 data = pd.read_csv("used_cars.csv")
-Analyzing the Data
+# Analyzing the Data
 Before we make any inferences, we listen to our data by examining all variables in the data.
 
 The main goal of data understanding is to gain general insights about the data, which covers the number of rows and columns, values in the data, datatypes, and Missing values in the dataset.
@@ -37,6 +37,8 @@ head() will display the top 5 observations of the dataset
 data.head()
 ![image](https://github.com/bji204549/Tamil/assets/144509308/59d5a435-d216-44e1-97ee-e0b0b830c5a7)
 tail() will display the last 5 observations of the dataset
+![image](https://github.com/bji204549/Tamil/assets/144509308/bf89e4aa-3d14-4714-b6c1-b783da188b69)
+
 
 data.tail()
 info() helps to understand the data type and information about data, including the number of records in each column, data having null or not null, Data type, the memory usage of the dataset
@@ -45,17 +47,22 @@ data.info()
 data.info()
 data.info() shows the variables Mileage, Engine, Power, Seats, New_Price, and Price have missing values. Numeric variables like Mileage, Power are of datatype as  float64 and int64. Categorical variables like Location, Fuel_Type, Transmission, and Owner Type are of object data type
 
-Check for Duplication
+# Check for Duplication
 nunique() based on several unique values in each column and the data description, we can identify the continuous and categorical columns in the data. Duplicated data can be handled or removed based on further analysis
+![image](https://github.com/bji204549/Tamil/assets/144509308/b6800bdb-d29e-42eb-8f44-6d3176a63e09)
 
 data.nunique()
 
-Missing Values Calculation
+# Missing Values Calculation
 isnull() is widely been in all pre-processing steps to identify null values in the data
 
 In our example, data.isnull().sum() is used to get the number of missing records in each column
+![image](https://github.com/bji204549/Tamil/assets/144509308/c6e260ea-9f98-4b20-9b60-88b413be965d)
+
 
 data.isnull().sum()
+![image](https://github.com/bji204549/Tamil/assets/144509308/90e97cb8-96c7-48e5-9208-db241925bc45)
+
 
 The below code helps to calculate the percentage of missing values in each column
 
@@ -71,7 +78,8 @@ In our dataset, the column S.No have only ID values, assuming they don’t have 
 # Remove S.No. column from data
 data = data.drop(['S.No.'], axis = 1)
 data.info()
-data reduction
+![image](https://github.com/bji204549/Tamil/assets/144509308/8b297fcc-afac-4674-9b0d-1abb01b0f716)
+
 We start our Feature Engineering as we need to add some columns required for analysis.
 
 # Step 4: Feature Engineering
@@ -92,13 +100,15 @@ data['Brand'] = data.Name.str.split().str.get(0)
 data['Model'] = data.Name.str.split().str.get(1) + data.Name.str.split().str.get(2)
 data[['Name','Brand','Model']]
 ![image](https://github.com/bji204549/Tamil/assets/144509308/02d65cff-c3a2-4fe3-967d-b7aaf0713ecf)
-Step 6: Data Cleaning/Wrangling
+# Step 6: Data Cleaning/Wrangling
 Some names of the variables are not relevant and not easy to understand. Some data may have data entry errors, and some variables may need data type conversion. We need to fix this issue in the data.
 
 In the example, The brand name ‘Isuzu’ ‘ISUZU’ and ‘Mini’ and ‘Land’ looks incorrect. This needs to be corrected
 
 print(data.Brand.unique())
 print(data.Brand.nunique())
+![image](https://github.com/bji204549/Tamil/assets/144509308/84e8b7f1-fd30-41e2-af81-3d6a1dc716e2)
+
 
 searchfor = ['Isuzu' ,'ISUZU','Mini','Land']
 data[data.Brand.str.contains('|'.join(searchfor))].head(5)
@@ -130,7 +140,7 @@ describe()– Provide a statistics summary of data belonging to numerical dataty
 
 data.describe().T
 ![image](https://github.com/bji204549/Tamil/assets/144509308/0edbf15c-1ae6-4899-b6a8-d6b5cf99900a)
-From the statistics summary, we can infer the below findings :
+# From the statistics summary, we can infer the below findings :
 
 Years range from 1996- 2019 and has a high in a range which shows used cars contain both latest models and old model cars.
 On average of Kilometers-driven in Used cars are ~58k KM. The range shows a huge difference between min and max as max values show 650000 KM shows the evidence of an outlier. This record can be removed.
@@ -150,9 +160,11 @@ print("Categorical Variables:")
 print(cat_cols)
 print("Numerical Variables:")
 print(num_cols)
+![image](https://github.com/bji204549/Tamil/assets/144509308/93c7af4e-960c-407c-8bad-3fef22d297dc)
+
 
 # Step 9: EDA Univariate Analysis
-Analyzing/visualizing the dataset by taking one variable at a time:
+# Analyzing/visualizing the dataset by taking one variable at a time:
 
 Data visualization is essential; we must decide what charts to plot to better understand the data. In this article, we visualize our data using Matplotlib and Seaborn libraries.
 
@@ -203,7 +215,7 @@ axes[1][1].tick_params(labelrotation=45);
 axes[2][0].tick_params(labelrotation=90);
 axes[2][1].tick_params(labelrotation=90);
 ![image](https://github.com/bji204549/Tamil/assets/144509308/d502f2e5-6f54-4d96-ac70-35a6f0c53603)
-From the count plot, we can have below observations
+# From the count plot, we can have below observations
 
 Mumbai has the highest number of cars available for purchase, followed by Hyderabad and Coimbatore
 ~53% of cars have fuel type as Diesel this shows diesel cars provide higher performance
@@ -211,7 +223,7 @@ Mumbai has the highest number of cars available for purchase, followed by Hydera
 ~82 % of cars are First owned cars. This shows most of the buyers prefer to purchase first-owner cars
 ~20% of cars belong to the brand Maruti followed by 19% of cars belonging to Hyundai
 WagonR ranks first among all models which are available for purchase
-Step 10: Data Transformation
+# Step 10: Data Transformation
 Before we proceed to Bi-variate Analysis, Univariate analysis demonstrated the data pattern as some variables to be transformed.
 
 Price and Kilometer-Driven variables are highly skewed and on a larger scale. Let’s do log transformation.
@@ -253,7 +265,7 @@ data['Car_Age']=date.today().year-data['Year']
 data.head()
 ![image](https://github.com/bji204549/Tamil/assets/144509308/51da8636-e5bc-4322-ad93-ed49610178e3)
 ![image](https://github.com/bji204549/Tamil/assets/144509308/6e9e0904-a219-4da0-9d1a-6926a2699135)
-Pair Plot provides below insights:
+# Pair Plot provides below insights:
 
 The variable Year has a positive correlation with price and mileage
 A year has a Negative correlation with kilometers-Driven
@@ -284,7 +296,7 @@ plt.subplots_adjust(hspace=1.0)
 plt.subplots_adjust(wspace=.5)
 sns.despine()
 ![image](https://github.com/bji204549/Tamil/assets/144509308/49c8ec10-4fdb-41a0-a5d9-a9eef6601adf)
-Observations
+# Observations
 The price of cars is high in Coimbatore and less price in Kolkata and Jaipur
 Automatic cars have more price than manual cars.
 Diesel and Electric cars have almost the same price, which is maximum, and LPG cars have the lowest price
@@ -307,7 +319,7 @@ plt.figure(figsize=(12, 7))
 sns.heatmap(data.drop(['Kilometers_Driven','Price'],axis=1).corr(), annot = True, vmin = -1, vmax = 1)
 plt.show()
 ![image](https://github.com/bji204549/Tamil/assets/144509308/19497bbb-f590-4af3-b544-6ffa0842122f)
-From the Heat map, we can infer the following:
+# From the Heat map, we can infer the following:
 The engine has a strong positive correlation to Power 0.86
 Price has a positive correlation to Engine 0.69 as well Power 0.77
 Mileage has correlated to Engine, Power, and Price negatively
@@ -337,7 +349,14 @@ data['Seats']=data.groupby(['Model','Brand'])['Seats'].apply(lambda x:x.fillna(x
 data['Engine']=data.groupby(['Brand','Model'])['Engine'].apply(lambda x:x.fillna(x.median()))
 data['Power']=data.groupby(['Brand','Model'])['Power'].apply(lambda x:x.fillna(x.median()))
 In general, there are no defined or perfect rules for imputing missing values in a dataset. Each method can perform better for some datasets but may perform even worse. Only practice and experiments give the knowledge which works better.
+#Conclusion
+In this article, we tried to analyze the factors influencing the used car’s price.
 
+Data Analysis helps to find the basic structure of the dataset.
+Dropped columns that are not adding value to our analysis.
+Performed Feature Engineering by adding some columns which contribute to our analysis.
+Data Transformations have been used to normalize the columns.
+We used different visualizations for EDA like Univariate, Bi-Variate, and Multivariate Analysis.
 
 
 
